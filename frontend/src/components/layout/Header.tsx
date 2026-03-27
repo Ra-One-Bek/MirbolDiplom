@@ -1,5 +1,6 @@
 import { useLocation } from 'react-router-dom';
 import { ROUTES } from '../../constants/routes';
+import { motion } from 'framer-motion';
 
 const pageMap: Record<string, { title: string; subtitle: string }> = {
   [ROUTES.HOME]: {
@@ -7,7 +8,7 @@ const pageMap: Record<string, { title: string; subtitle: string }> = {
     subtitle: 'Описание системы и ее назначения.',
   },
   [ROUTES.DASHBOARD]: {
-    title: 'Дашборд',
+    title: 'Dashboard',
     subtitle: 'Ключевые показатели и основная статистика рынка МСБ.',
   },
   [ROUTES.ANALYTICS]: {
@@ -37,20 +38,26 @@ const Header = () => {
   };
 
   return (
-    <header className="sticky top-0 z-10 border-b border-slate-200 bg-white/95 px-6 py-4 backdrop-blur">
+    <motion.header 
+    initial={{opacity:0, y:-50}}
+    animate={{opacity:1, y:0}}
+    transition={{duration: 0.5, ease: "easeInOut"}}
+    className="sticky top-0 z-10 bg-slate-900 px-6 py-4 backdrop-blur">
       <div className="flex flex-col gap-2 md:flex-row md:items-center md:justify-between">
         <div>
-          <h1 className="text-2xl font-bold text-slate-800">
+          <h1 className="text-2xl font-bold text-sky-200">
             {currentPage.title}
           </h1>
           <p className="text-sm text-slate-500">{currentPage.subtitle}</p>
         </div>
 
-        <div className="rounded-xl bg-slate-100 px-4 py-2 text-sm text-slate-600">
-          Diploma Project • React + TypeScript + NestJS
+        <div className="rounded-xl w-10 bg-slate-100 p-1 text-sm text-slate-600">
+          <div className='w-3 h-2 bg-slate-900 rounded-full'>
+
+          </div>
         </div>
       </div>
-    </header>
+    </motion.header>
   );
 };
 

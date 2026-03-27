@@ -65,7 +65,7 @@ const DataPage = () => {
   return (
     <div className="space-y-6">
       <div>
-        <h2 className="text-xl font-semibold text-slate-800">
+        <h2 className="text-xl font-semibold text-slate-300">
           Таблица данных рынка МСБ
         </h2>
         <p className="mt-1 text-sm text-slate-500">

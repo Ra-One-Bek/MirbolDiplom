@@ -162,7 +162,7 @@ const AnalyticsPage = () => {
 
       <section className="space-y-3">
         <div>
-          <h2 className="text-xl font-semibold text-slate-800">
+          <h2 className="text-xl font-semibold text-slate-300">
             Результаты аналитики
           </h2>
           <p className="mt-1 text-sm text-slate-500">
@@ -171,7 +171,7 @@ const AnalyticsPage = () => {
         </div>
 
         {isLoadingData ? (
-          <div className="text-slate-600">Загрузка аналитики...</div>
+          <div className="text-slate-400">Загрузка аналитики...</div>
         ) : (
           <Table data={filteredData} columns={columns} />
         )}

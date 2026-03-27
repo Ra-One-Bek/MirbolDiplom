@@ -6,7 +6,10 @@ body,
   min-height: 100%;
 }
 
-body {
+html, body {
   margin: 0;
+  padding: 0;
+  background-color: #0f172a;
   font-family: Arial, sans-serif;
+  scroll-behavior: smooth;
 }
