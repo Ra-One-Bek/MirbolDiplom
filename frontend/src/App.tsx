@@ -10,6 +10,8 @@ import DataPage from './pages/DataPage';
 import AdminPage from './pages/AdminPage';
 import LoginPage from './pages/LoginPage';
 import NotFoundPage from './pages/NotFoundPage';
+import ProtectedRoute from './components/common/ProtectedRoute';
+import RegisterPage from './pages/RegisterPage';
 
 function App() {
   return (
@@ -24,39 +26,49 @@ function App() {
           }
         />
 
+        <Route path={ROUTES.REGISTER} element={<RegisterPage />} />
+
+        <Route
+          path={ROUTES.ADMIN}
+          element={
+            <ProtectedRoute requiredRole="admin">
+              <MainLayout>
+                <AdminPage />
+              </MainLayout>
+            </ProtectedRoute>
+          }
+        />
+
         <Route
           path={ROUTES.DASHBOARD}
           element={
-            <MainLayout>
-              <DashboardPage />
-            </MainLayout>
+            <ProtectedRoute>
+              <MainLayout>
+                <DashboardPage />
+              </MainLayout>
+            </ProtectedRoute>
           }
         />
 
         <Route
           path={ROUTES.ANALYTICS}
           element={
-            <MainLayout>
-              <AnalyticsPage />
-            </MainLayout>
+            <ProtectedRoute>
+              <MainLayout>
+                <AnalyticsPage />
+              </MainLayout>
+            </ProtectedRoute>
           }
         />
 
         <Route
           path={ROUTES.DATA}
           element={
-            <MainLayout>
-              <DataPage />
-            </MainLayout>
-          }
-        />
-
-        <Route
-          path={ROUTES.ADMIN}
-          element={
-            <MainLayout>
-              <AdminPage />
-            </MainLayout>
+            <ProtectedRoute>
+              <MainLayout>
+                <DataPage />
+              </MainLayout>
+            </ProtectedRoute>
           }
         />
 

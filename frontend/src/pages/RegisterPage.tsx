@@ -4,11 +4,12 @@ import { ROUTES } from '../constants/routes';
 import { authService } from '../services/api/auth.service';
 import { authStorage } from '../utils/auth';
 
-const LoginPage = () => {
+const RegisterPage = () => {
   const navigate = useNavigate();
 
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+
   const [error, setError] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
 
@@ -16,7 +17,7 @@ const LoginPage = () => {
     if (authStorage.isAuthenticated()) {
       navigate(ROUTES.DASHBOARD);
     }
-  }, []);
+  }, [navigate]);
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -25,12 +26,14 @@ const LoginPage = () => {
       setIsSubmitting(true);
       setError('');
 
-      const response = await authService.login(username, password);
-      authStorage.setAuth(response.access_token, response.user);
+      await authService.register(username, password);
+
+      const loginResponse = await authService.login(username, password);
+      authStorage.setAuth(loginResponse.access_token, loginResponse.user);
 
       navigate(ROUTES.DASHBOARD);
     } catch {
-      setError('Неверный логин или пароль');
+      setError('Не удалось зарегистрироваться. Возможно, пользователь уже существует.');
     } finally {
       setIsSubmitting(false);
     }
@@ -38,8 +41,11 @@ const LoginPage = () => {
 
   return (
     <div className="flex min-h-screen items-center justify-center bg-gradient-to-t from-slate-900 to-sky-900 px-4">
-      <div className="w-full max-w-lg rounded-2xl bg-gradient-to-t from-sky-200 via-blue-100 to-purple-100 p-8 shadow-lg">
-        <h1 className="mb-6 text-3xl font-bold text-slate-800">Вход в систему</h1>
+      <div className="w-full max-w-lg rounded-2xl bg-gradient-to-t from-purple-200 via-blue-200 to-blue-100 p-8 shadow-lg">
+        <h1 className="mb-2 text-3xl font-bold text-slate-800">Регистрация</h1>
+        <p className="mb-6 text-sm text-slate-500">
+          Создайте аккаунт для работы с системой анализа рынка МСБ
+        </p>
 
         <form className="space-y-4" onSubmit={handleSubmit}>
           <div>
@@ -51,7 +57,9 @@ const LoginPage = () => {
               value={username}
               onChange={(e) => setUsername(e.target.value)}
               placeholder="Введите username"
-              className="w-full rounded-lg border border-slate-300 px-4 py-3 outline-none focus:border-slate-500"
+              className="w-full rounded-lg border border-slate-300 px-4 py-3 outline-none transition focus:border-slate-500"
+              required
+              minLength={3}
             />
           </div>
 
@@ -64,7 +72,9 @@ const LoginPage = () => {
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               placeholder="Введите пароль"
-              className="w-full rounded-lg border border-slate-300 px-4 py-3 outline-none focus:border-slate-500"
+              className="w-full rounded-lg border border-slate-300 px-4 py-3 outline-none transition focus:border-slate-500"
+              required
+              minLength={4}
             />
           </div>
 
@@ -75,17 +85,18 @@ const LoginPage = () => {
             disabled={isSubmitting}
             className="w-full rounded-lg bg-slate-800 px-4 py-3 font-medium text-white transition hover:bg-slate-700 disabled:opacity-60"
           >
-            {isSubmitting ? 'Вход...' : 'Войти'}
+            {isSubmitting ? 'Регистрация...' : 'Зарегистрироваться'}
           </button>
         </form>
+
         <p className="mt-4 text-sm text-slate-500">
-          Нет аккаунта?{' '}
+          Уже есть аккаунт?{' '}
           <button
             type="button"
-            onClick={() => navigate(ROUTES.REGISTER)}
+            onClick={() => navigate(ROUTES.LOGIN)}
             className="font-medium text-blue-600 transition hover:text-blue-700"
           >
-            Зарегистрироваться
+            Войти
           </button>
         </p>
       </div>
@@ -93,4 +104,4 @@ const LoginPage = () => {
   );
 };
 
-export default LoginPage;
+export default RegisterPage;

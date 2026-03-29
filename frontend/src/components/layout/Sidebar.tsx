@@ -1,11 +1,21 @@
 import { NavLink } from 'react-router-dom';
 import { menuItems } from '../../constants/menu';
+import { authStorage } from '../../utils/auth';
 
 interface SidebarProps {
   compact?: boolean;
 }
 
 const Sidebar = ({ compact = false }: SidebarProps) => {
+  const currentUser = authStorage.getUser();
+
+  const visibleMenuItems = menuItems.filter((item) => {
+    if (item.path === '/admin' && currentUser?.role !== 'admin') {
+      return false;
+    }
+    return true;
+  });
+
   return (
     <aside
       className={`fixed left-0 top-0 z-20 h-screen border-r border-slate-800 bg-gradient-to-t from-slate-900 to-sky-900 rounded-r-2xl text-white transition-all duration-300 ${
@@ -30,7 +40,7 @@ const Sidebar = ({ compact = false }: SidebarProps) => {
       </div>
 
       <nav className="flex flex-col gap-2 p-3">
-        {menuItems.map((item) => {
+        {visibleMenuItems.map((item) => {
           const Icon = item.icon;
 
           return (

@@ -5,4 +5,5 @@ export const ROUTES = {
   DATA: '/data',
   ADMIN: '/admin',
   LOGIN: '/login',
+  REGISTER: '/register',
 } as const;

@@ -4,6 +4,8 @@ import { AppService } from './app.service';
 import { MarketModule } from './market/market.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { MarketEntity } from './market/market.entity';
+import { AuthModule } from './auth/auth.module';
+import { UserEntity } from './auth/user.entity';
 
 @Module({
   imports: [
@@ -12,14 +14,15 @@ import { MarketEntity } from './market/market.entity';
       host: 'localhost',
       port: 5432,
       username: 'postgres',
-      password: 'abiev555',
+      password: 'ТВОЙ_ПАРОЛЬ',
       database: 'msb_market',
-      entities: [MarketEntity],
-      synchronize: true, // ВАЖНО: только для разработки
+      entities: [MarketEntity, UserEntity],
+      synchronize: true,
     }),
-
+    AuthModule,
     MarketModule,
   ],
+  
   controllers: [AppController],
   providers: [AppService],
 })

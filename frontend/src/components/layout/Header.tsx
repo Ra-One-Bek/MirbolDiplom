@@ -1,5 +1,6 @@
 import { useLocation } from 'react-router-dom';
 import { ROUTES } from '../../constants/routes';
+import { authStorage } from '../../utils/auth';
 import { motion } from 'framer-motion';
 
 const pageMap: Record<string, { title: string; subtitle: string }> = {
@@ -31,6 +32,7 @@ const pageMap: Record<string, { title: string; subtitle: string }> = {
 
 const Header = () => {
   const location = useLocation();
+  const user = authStorage.getUser();
 
   const currentPage = pageMap[location.pathname] ?? {
     title: 'Страница',
@@ -51,10 +53,21 @@ const Header = () => {
           <p className="text-sm text-slate-500">{currentPage.subtitle}</p>
         </div>
 
-        <div className="rounded-xl w-10 bg-slate-100 p-1 text-sm text-slate-600">
-          <div className='w-3 h-2 bg-slate-900 rounded-full'>
+        <div className="flex items-center gap-4">
+          {user && (
+            <div className="text-sm text-slate-600">
+              👤 {user.username} ({user.role})
+            </div>
+          )}
 
-          </div>
+          {user && (
+            <button
+              onClick={() => authStorage.logout()}
+              className="rounded-lg bg-slate-800 px-3 py-2 text-sm text-white hover:bg-slate-700"
+            >
+              Выйти
+            </button>
+          )}
         </div>
       </div>
     </motion.header>
