@@ -1,4 +1,6 @@
 import type { ChangeEvent } from 'react';
+import { RotateCcw } from 'lucide-react';
+import Card from '../ui/Card';
 
 interface FilterPanelProps {
   regions: string[];
@@ -31,24 +33,35 @@ const FilterPanel = ({
       callback(event.target.value);
     };
 
+  const selectClassName =
+    'w-full rounded-2xl border border-white/10 bg-white/6 px-4 py-3 text-sm text-white outline-none transition focus:border-cyan-300/50 focus:bg-white/8';
+
   return (
-    <div className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
-      <div className="mb-4">
-        <h2 className="text-lg font-semibold text-slate-800">Фильтры анализа</h2>
-        <p className="mt-1 text-sm text-slate-500">
-          Выберите параметры для анализа рынка малого и среднего бизнеса
-        </p>
+    <Card className="p-5 md:p-6" hover={false}>
+      <div className="mb-5 flex flex-col gap-3 md:flex-row md:items-end md:justify-between">
+        <div>
+          <h2 className="text-xl font-semibold text-white">Фильтры анализа</h2>
+          <p className="mt-1 text-sm text-slate-400">
+            Выбери параметры и смотри, как меняется картина рынка.
+          </p>
+        </div>
+
+        <button
+          onClick={onReset}
+          className="inline-flex items-center gap-2 rounded-2xl border border-white/10 bg-white/6 px-4 py-3 text-sm text-slate-200 transition hover:bg-white/10"
+        >
+          <RotateCcw className="h-4 w-4" />
+          Сбросить
+        </button>
       </div>
 
-      <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
-        <div>
-          <label className="mb-2 block text-sm font-medium text-slate-700">
-            Регион
-          </label>
+      <div className="grid gap-4 md:grid-cols-3">
+        <label className="space-y-2">
+          <span className="text-sm text-slate-300">Регион</span>
           <select
             value={selectedRegion}
             onChange={handleSelectChange(onRegionChange)}
-            className="w-full rounded-xl border border-slate-300 bg-white px-4 py-3 text-sm text-slate-700 outline-none transition focus:border-slate-500"
+            className={selectClassName}
           >
             <option value="">Все регионы</option>
             {regions.map((region) => (
@@ -57,16 +70,14 @@ const FilterPanel = ({
               </option>
             ))}
           </select>
-        </div>
+        </label>
 
-        <div>
-          <label className="mb-2 block text-sm font-medium text-slate-700">
-            Отрасль
-          </label>
+        <label className="space-y-2">
+          <span className="text-sm text-slate-300">Отрасль</span>
           <select
             value={selectedIndustry}
             onChange={handleSelectChange(onIndustryChange)}
-            className="w-full rounded-xl border border-slate-300 bg-white px-4 py-3 text-sm text-slate-700 outline-none transition focus:border-slate-500"
+            className={selectClassName}
           >
             <option value="">Все отрасли</option>
             {industries.map((industry) => (
@@ -75,37 +86,25 @@ const FilterPanel = ({
               </option>
             ))}
           </select>
-        </div>
+        </label>
 
-        <div>
-          <label className="mb-2 block text-sm font-medium text-slate-700">
-            Год
-          </label>
+        <label className="space-y-2">
+          <span className="text-sm text-slate-300">Год</span>
           <select
             value={selectedYear}
             onChange={handleSelectChange(onYearChange)}
-            className="w-full rounded-xl border border-slate-300 bg-white px-4 py-3 text-sm text-slate-700 outline-none transition focus:border-slate-500"
+            className={selectClassName}
           >
             <option value="">Все годы</option>
             {years.map((year) => (
-              <option key={year} value={String(year)}>
+              <option key={year} value={year}>
                 {year}
               </option>
             ))}
           </select>
-        </div>
-
-        <div className="flex items-end">
-          <button
-            type="button"
-            onClick={onReset}
-            className="w-full rounded-xl bg-slate-800 px-4 py-3 text-sm font-medium text-white transition hover:bg-slate-700"
-          >
-            Сбросить фильтры
-          </button>
-        </div>
+        </label>
       </div>
-    </div>
+    </Card>
   );
 };
 

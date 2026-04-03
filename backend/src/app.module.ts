@@ -14,7 +14,7 @@ import { UserEntity } from './auth/user.entity';
       host: 'localhost',
       port: 5432,
       username: 'postgres',
-      password: 'ТВОЙ_ПАРОЛЬ',
+      password: 'abiev555',
       database: 'msb_market',
       entities: [MarketEntity, UserEntity],
       synchronize: true,

@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useState } from 'react';
+import { LayoutDashboard, Sparkles } from 'lucide-react';
 import StatsCard from '../components/dashboard/StatsCard';
 import RevenueLineChart from '../components/dashboard/RevenueLineChart';
 import IndustryPieChart from '../components/dashboard/IndustryPieChart';
@@ -19,22 +20,20 @@ const DashboardPage = () => {
   const [stats, setStats] = useState<DashboardStats | null>(null);
   const [marketData, setMarketData] = useState<MarketDataItem[]>([]);
   const [isLoading, setIsLoading] = useState(true);
-  const [error, setError] = useState<string>('');
+  const [error, setError] = useState('');
 
   useEffect(() => {
     const fetchDashboardData = async () => {
       try {
         setIsLoading(true);
         setError('');
-
         const [statsResponse, marketResponse] = await Promise.all([
           marketService.getDashboardStats(),
           marketService.getAllMarketData(),
         ]);
-
         setStats(statsResponse);
         setMarketData(marketResponse);
-      } catch (err) {
+      } catch {
         setError('Не удалось загрузить данные дашборда');
       } finally {
         setIsLoading(false);
@@ -57,10 +56,9 @@ const DashboardPage = () => {
 
         acc[item.year].companies += item.companyCount;
         acc[item.year].revenue += item.revenue;
-
         return acc;
       },
-      {}
+      {},
     );
 
     return Object.values(groupedByYear).sort((a, b) => a.year - b.year);
@@ -91,66 +89,108 @@ const DashboardPage = () => {
   }, [marketData]);
 
   if (isLoading) {
-    return <div className="text-slate-600">Загрузка данных...</div>;
+    return <div className="p-6 text-slate-300">Загрузка данных...</div>;
   }
 
   if (error) {
-    return <div className="text-red-500">{error}</div>;
+    return <div className="p-6 text-rose-300">{error}</div>;
   }
 
   if (!stats) {
-    return <div className="text-slate-600">Нет данных для отображения</div>;
+    return <div className="p-6 text-slate-300">Нет данных для отображения</div>;
   }
 
   return (
-    <div className="space-y-6">
-      <section className="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
+    <div className="space-y-6 p-4 md:p-6">
+      <Card className="p-6 md:p-7">
+        <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
+          <div>
+            <div className="mb-3 inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/8 px-3 py-1 text-[11px] uppercase tracking-[0.24em] text-cyan-200">
+              <Sparkles className="h-3.5 w-3.5" />
+              Neo Analytics
+            </div>
+            <h1 className="text-2xl font-semibold text-white md:text-4xl">
+              Dashboard рынка МСБ
+            </h1>
+            <p className="mt-2 max-w-2xl text-sm leading-6 text-slate-400">
+              Более живой, cinematic и удобный обзор ключевых показателей.
+            </p>
+          </div>
+
+          <div className="flex h-14 w-14 items-center justify-center rounded-3xl border border-white/10 bg-white/8 text-cyan-200">
+            <LayoutDashboard className="h-6 w-6" />
+          </div>
+        </div>
+      </Card>
+
+      <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
         <StatsCard
-          title="Количество предприятий"
+          title="Всего компаний"
           value={formatNumber(stats.totalCompanies)}
-          description="Общее число активных субъектов МСБ"
+          description="Текущее количество предприятий в системе"
+          accent="cyan"
+          icon="companies"
         />
         <StatsCard
-          title="Общая выручка"
+          title="Суммарная выручка"
           value={formatCurrency(stats.totalRevenue)}
-          description="Суммарная выручка по рынку"
+          description="Общий финансовый объем по рынку"
+          accent="violet"
+          icon="revenue"
         />
         <StatsCard
-          title="Количество сотрудников"
+          title="Всего сотрудников"
           value={formatNumber(stats.totalEmployees)}
-          description="Общая численность работников"
+          description="Общее количество занятых сотрудников"
+          accent="emerald"
+          icon="employees"
         />
         <StatsCard
           title="Средний рост"
           value={`${stats.averageGrowth}%`}
-          description="Средний темп роста"
+          description="Средняя динамика развития сегмента"
+          accent="amber"
+          icon="growth"
         />
-      </section>
+      </div>
 
-      <section className="grid gap-6 xl:grid-cols-2">
-        <Card>
-          <h2 className="mb-4 text-xl font-semibold text-slate-800">
-            Динамика количества предприятий по годам
+      <Card className="p-5 md:p-6">
+        <div className="mb-5">
+          <h2 className="text-xl font-semibold text-white">
+            Динамика количества предприятий и выручки
           </h2>
-          <RevenueLineChart data={yearlyTrendData} />
-        </Card>
+          <p className="mt-1 text-sm text-slate-400">
+            Главный тренд по годам с двойной осью и мягким glow-эффектом.
+          </p>
+        </div>
+        <RevenueLineChart data={yearlyTrendData} />
+      </Card>
 
-        <Card>
-          <h2 className="mb-4 text-xl font-semibold text-slate-800">
-            Распределение по отраслям
-          </h2>
+      <div className="grid gap-6 xl:grid-cols-2">
+        <Card className="p-5 md:p-6">
+          <div className="mb-5">
+            <h2 className="text-xl font-semibold text-white">
+              Распределение по отраслям
+            </h2>
+            <p className="mt-1 text-sm text-slate-400">
+              Donut-визуализация с более мягким и современным видом.
+            </p>
+          </div>
           <IndustryPieChart data={industryDistributionData} />
         </Card>
-      </section>
 
-      <section>
-        <Card>
-          <h2 className="mb-4 text-xl font-semibold text-slate-800">
-            Сравнение регионов по количеству предприятий
-          </h2>
+        <Card className="p-5 md:p-6">
+          <div className="mb-5">
+            <h2 className="text-xl font-semibold text-white">
+              Топ регионов по количеству предприятий
+            </h2>
+            <p className="mt-1 text-sm text-slate-400">
+              Обновленный bar chart с более объемным визуальным акцентом.
+            </p>
+          </div>
           <RegionBarChart data={regionStatsData} />
         </Card>
-      </section>
+      </div>
     </div>
   );
 };
