@@ -1,5 +1,6 @@
 import type { ReactNode } from 'react';
 import { useLocation } from 'react-router-dom';
+import { motion } from 'framer-motion';
 import Sidebar from './Sidebar';
 import Header from './Header';
 import { ROUTES } from '../../constants/routes';
@@ -16,17 +17,21 @@ const MainLayout = ({ children }: MainLayoutProps) => {
     <div className="min-h-screen">
       <Sidebar compact={isHomePage} />
 
-      <div
-        className={`min-h-screen transition-all duration-300 ${
-          isHomePage ? 'ml-20' : 'ml-64'
-        }`}
+      <motion.div
+        animate={{
+          marginLeft: isHomePage ? 80 : 256,
+        }}
+        transition={{ duration: 0.35, ease: 'easeInOut' }}
+        className="min-h-screen"
       >
         {!isHomePage && <Header />}
 
         <main className={isHomePage ? 'p-0' : 'p-6'}>
-          <div className={isHomePage ? '' : 'mx-auto max-w-7xl'}>{children}</div>
+          <div className={isHomePage ? '' : 'mx-auto max-w-7xl'}>
+            {children}
+          </div>
         </main>
-      </div>
+      </motion.div>
     </div>
   );
 };
