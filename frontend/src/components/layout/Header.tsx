@@ -44,7 +44,7 @@ const Header = () => {
     initial={{opacity:0, y:-50}}
     animate={{opacity:1, y:0}}
     transition={{duration: 0.5, ease: "easeInOut"}}
-    className="sticky top-0 z-10 bg-slate-900 px-6 py-4 backdrop-blur">
+    className="sticky top-0 z-15 bg-slate-900 px-6 py-4 backdrop-blur">
       <div className="flex flex-col gap-2 md:flex-row md:items-center md:justify-between">
         <div>
           <h1 className="text-2xl font-bold text-sky-200">
