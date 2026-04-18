@@ -1,0 +1,23 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Алматы"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [76.8, 43.2],
+            [76.9, 43.2],
+            [76.9, 43.3],
+            [76.8, 43.3],
+            [76.8, 43.2]
+          ]
+        ]
+      }
+    }
+  ]
+}

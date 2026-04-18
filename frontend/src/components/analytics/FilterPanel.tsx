@@ -34,7 +34,7 @@ const FilterPanel = ({
     };
 
   const selectClassName =
-    'w-full rounded-2xl border border-white/10 bg-white/6 px-4 py-3 text-sm text-white outline-none transition focus:border-cyan-300/50 focus:bg-white/8';
+    'w-full rounded-2xl border border-white/10 bg-black/6 px-4 py-3 text-sm text-sky-200 outline-none transition focus:border-cyan-300/50 focus:bg-slate-900';
 
   return (
     <Card className="p-5 md:p-6" hover={false}>

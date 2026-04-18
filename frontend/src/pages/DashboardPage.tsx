@@ -8,11 +8,12 @@ import Card from '../components/ui/Card';
 import { marketService } from '../services/api/market.service';
 import HeroScene3D from '../components/dashboard/HeroScene3D';
 import AIAssistantPanel from '../components/dashboard/AIAssistantPanel';
-import RegionMapMock from '../components/dashboard/RegionMapMock';
+import KazakhstanRegionMap from '../components/dashboard/KazakhstanRegionMap';
 import type {
   DashboardStats,
   IndustryDistributionItem,
   MarketDataItem,
+  RegionMapItem,
   RegionStatsItem,
   YearlyTrendItem,
 } from '../types/market.types';
@@ -124,6 +125,38 @@ const DashboardPage = () => {
 
     return Object.entries(groupedByRegion)
       .map(([region, companies]) => ({ region, companies }))
+      .sort((a, b) => b.companies - a.companies);
+  }, [filteredData]);
+
+  const regionMapData: RegionMapItem[] = useMemo(() => {
+    const grouped = filteredData.reduce<Record<string, RegionMapItem>>((acc, item) => {
+      if (!acc[item.region]) {
+        acc[item.region] = {
+          region: item.region,
+          companies: 0,
+          revenue: 0,
+          employees: 0,
+          growthRate: 0,
+        };
+      }
+
+      acc[item.region].companies += item.companyCount;
+      acc[item.region].revenue += item.revenue;
+      acc[item.region].employees += item.employeeCount;
+      acc[item.region].growthRate += item.growthRate;
+
+      return acc;
+    }, {});
+
+    return Object.values(grouped)
+      .map((item) => {
+        const rowsInRegion = filteredData.filter((row) => row.region === item.region).length || 1;
+
+        return {
+          ...item,
+          growthRate: item.growthRate / rowsInRegion,
+        };
+      })
       .sort((a, b) => b.companies - a.companies);
   }, [filteredData]);
 
@@ -242,7 +275,7 @@ const DashboardPage = () => {
           initial={{ opacity: 0, y: 24 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.45 }}
-          className="relative overflow-hidden rounded-[32px] border border-white/10 bg-gradient-to-r from-cyan-600 via-sky-600 to-violet-700 p-8 shadow-2xl"
+          className="relative overflow-hidden rounded-[32px] border border-white/10 bg-gradient-to-r from-cyan-800 via-cyan-700 to-sky-700 p-8 shadow-2xl"
         >
           <div className="absolute -right-16 top-0 h-56 w-56 rounded-full bg-white/10 blur-3xl" />
           <div className="absolute bottom-0 right-28 h-40 w-40 rounded-full bg-cyan-300/20 blur-3xl" />
@@ -412,7 +445,11 @@ const DashboardPage = () => {
         </section>
 
         <section className="grid grid-cols-1 gap-6">
-          <RegionMapMock data={regionStatsData} />
+          <KazakhstanRegionMap
+            data={regionMapData}
+            selectedRegion={selectedRegion}
+            onRegionSelect={setSelectedRegion}
+          />
         </section>
 
         <section className="grid grid-cols-1 gap-6 xl:grid-cols-3">

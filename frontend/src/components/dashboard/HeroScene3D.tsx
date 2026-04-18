@@ -17,8 +17,8 @@ const RotatingShape = () => {
       <mesh ref={meshRef}>
         <icosahedronGeometry args={[1.6, 1]} />
         <meshStandardMaterial
-          color="#67e8f9"
-          emissive="#0ea5e9"
+          color="#274a4e"
+          emissive="#4f587e"
           emissiveIntensity={0.45}
           roughness={0.15}
           metalness={0.7}

@@ -37,3 +37,11 @@ export interface FilterOptions {
   industries: string[];
   years: number[];
 }
+
+export interface RegionMapItem {
+  region: string;
+  companies: number;
+  revenue: number;
+  employees: number;
+  growthRate: number;
+}

@@ -57,7 +57,7 @@ const RegisterPage = () => {
               value={username}
               onChange={(e) => setUsername(e.target.value)}
               placeholder="Введите username"
-              className="w-full rounded-lg border border-slate-300 px-4 py-3 outline-none transition focus:border-slate-500"
+              className="w-full rounded-lg border border-slate-300 px-4 py-3 outline-none transition focus:border-slate-500 text-slate-600"
               required
               minLength={3}
             />
@@ -72,7 +72,7 @@ const RegisterPage = () => {
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               placeholder="Введите пароль"
-              className="w-full rounded-lg border border-slate-300 px-4 py-3 outline-none transition focus:border-slate-500"
+              className="w-full rounded-lg border border-slate-300 px-4 py-3 outline-none transition focus:border-slate-500 text-slate-600"
               required
               minLength={4}
             />

@@ -181,12 +181,12 @@ const AdminPage = () => {
 
   return (
     <div className="space-y-6">
-      <section className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
+      <section className="rounded-2xl border border-slate-200 bg-sky-100/10 p-6 shadow-sm">
         <div className="mb-5">
-          <h2 className="text-xl font-semibold text-slate-800">
+          <h2 className="text-xl font-semibold text-slate-200">
             {editingId !== null ? 'Редактирование записи' : 'Добавление новой записи'}
           </h2>
-          <p className="mt-1 text-sm text-slate-500">
+          <p className="mt-1 text-sm text-slate-100">
             {editingId !== null
               ? 'Измените данные и сохраните обновленную запись'
               : 'Заполните форму для добавления данных о рынке МСБ'}
@@ -195,7 +195,7 @@ const AdminPage = () => {
 
         <form onSubmit={handleSubmit} className="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
           <div>
-            <label className="mb-2 block text-sm font-medium text-slate-700">
+            <label className="mb-2 block text-sm font-medium text-slate-300">
               Регион
             </label>
             <input
@@ -209,7 +209,7 @@ const AdminPage = () => {
           </div>
 
           <div>
-            <label className="mb-2 block text-sm font-medium text-slate-700">
+            <label className="mb-2 block text-sm font-medium text-slate-300">
               Отрасль
             </label>
             <input
@@ -223,7 +223,7 @@ const AdminPage = () => {
           </div>
 
           <div>
-            <label className="mb-2 block text-sm font-medium text-slate-700">
+            <label className="mb-2 block text-sm font-medium text-slate-300">
               Год
             </label>
             <input
@@ -236,7 +236,7 @@ const AdminPage = () => {
           </div>
 
           <div>
-            <label className="mb-2 block text-sm font-medium text-slate-700">
+            <label className="mb-2 block text-sm font-medium text-slate-300">
               Количество компаний
             </label>
             <input
@@ -249,7 +249,7 @@ const AdminPage = () => {
           </div>
 
           <div>
-            <label className="mb-2 block text-sm font-medium text-slate-700">
+            <label className="mb-2 block text-sm font-medium text-slate-300">
               Выручка
             </label>
             <input
@@ -262,7 +262,7 @@ const AdminPage = () => {
           </div>
 
           <div>
-            <label className="mb-2 block text-sm font-medium text-slate-700">
+            <label className="mb-2 block text-sm font-medium text-slate-300">
               Количество сотрудников
             </label>
             <input
@@ -275,7 +275,7 @@ const AdminPage = () => {
           </div>
 
           <div>
-            <label className="mb-2 block text-sm font-medium text-slate-700">
+            <label className="mb-2 block text-sm font-medium text-slate-300">
               Темп роста (%)
             </label>
             <input
